@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -45,7 +46,6 @@ jobs:
           echo "Current version: $CURRENT_VERSION"
           LATEST_VERSION=$(npm view @mercuryworkshop/scramjet versions --json | jq -r '.[-1]' || echo "0.0.0")
           echo "Latest NPM version: $LATEST_VERSION"
-
           if [ "$LATEST_VERSION" != "$CURRENT_VERSION" ];
           then
             echo "Version changed"
@@ -55,7 +55,6 @@ jobs:
             echo "Version not changed"
             echo "version_changed=false" >> "$GITHUB_OUTPUT"
           fi
-
   build:
     name: Build Scramjet
     runs-on: ubuntu-latest
@@ -88,7 +87,6 @@ jobs:
           key: rewriter-release-${{ hashFiles('rewriter/wasm/Cargo.toml', 'rewriter/wasm/src/**/*.rs', 'rewriter/wasm/build.sh') }}
           restore-keys: |
             rewriter-release-
-
       - name: Cache Rust dependencies
         if: steps.rewriter-cache.outputs.cache-hit != 'true'
         uses: Swatinem/rust-cache@v2
@@ -129,7 +127,6 @@ jobs:
             dist/*.js
             dist/*.js.map
             dist/*.wasm
-
   package-validation:
     name: Validate Package Structure
     runs-on: ubuntu-latest
@@ -220,7 +217,6 @@ jobs:
           key: rewriter-release-${{ hashFiles('rewriter/wasm/Cargo.toml', 'rewriter/wasm/src/**/*.rs', 'rewriter/wasm/build.sh') }}
           restore-keys: |
             rewriter-release-
-
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
         with:
